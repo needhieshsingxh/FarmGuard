@@ -113,6 +113,20 @@ const PublicNavbar = () => {
 
           {/* Mobile Menu Button & Actions */}
           <div className="flex md:hidden items-center space-x-2">
+            {/* Language Selector for Mobile */}
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as Language)}
+              className="bg-transparent dark:bg-gray-800 border-0 rounded-md py-1 px-2 text-xs text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-0 cursor-pointer"
+              aria-label="Select language"
+            >
+              {LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
