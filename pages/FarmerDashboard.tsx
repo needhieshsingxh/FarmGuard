@@ -15,14 +15,14 @@ const StatCard: React.FC<{
   <Card>
     <div className="flex items-center justify-between">
       <div>
-        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+        <p className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400">
           {title}
         </p>
-        <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+        <p className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">
           {value}
         </p>
       </div>
-      <div className={`p-3 rounded-full ${color}`}>{icon}</div>
+      <div className={`p-2 sm:p-3 rounded-full ${color}`}>{icon}</div>
     </div>
   </Card>
 );
@@ -46,7 +46,7 @@ const CameraFeed: React.FC<{
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
 
-      <div className="absolute top-3 left-3 flex items-center gap-2 text-white text-xs font-bold bg-black/50 px-2 py-1 rounded-md">
+      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex items-center gap-1 sm:gap-2 text-white text-xs font-bold bg-black/50 px-1.5 sm:px-2 py-1 rounded-md">
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -54,11 +54,11 @@ const CameraFeed: React.FC<{
         LIVE
       </div>
 
-      <div className="absolute bottom-3 left-3 text-white text-sm font-semibold">
+      <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 text-white text-xs sm:text-sm font-semibold">
         {title}
       </div>
       <div
-        className={`absolute top-3 right-3 px-2 py-1 text-xs font-semibold rounded-full flex items-center gap-1 ${
+        className={`absolute top-2 sm:top-3 right-2 sm:right-3 px-1.5 sm:px-2 py-1 text-xs font-semibold rounded-full flex items-center gap-1 ${
           status === "ok"
             ? "bg-green-500/80 text-white"
             : "bg-yellow-400/80 text-yellow-900 animate-pulse"
@@ -372,76 +372,99 @@ const FarmerDashboard: React.FC = () => {
           </Card>
 
           <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-700 border-l-4 border-green-500">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="p-1.5 sm:p-2 bg-green-100 dark:bg-green-900 rounded-lg flex-shrink-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 dark:text-green-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  />
                 </svg>
               </div>
-              <div>
-                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+              <div className="min-w-0">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100">
                   {t("aiRecommendations")}
                 </h2>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Powered by AI</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  Powered by AI
+                </p>
               </div>
             </div>
-            
+
             {aiTips ? (
-              <div className="space-y-4">
-                {aiTips.split('<br/>').filter(tip => tip.trim()).map((tip, index) => {
-                  // Remove leading asterisk and bullet points
-                  let cleanTip = tip.replace(/^\*\s*/, '').replace(/^-\s*/, '').trim();
-                  if (!cleanTip) return null;
-                  
-                  // Parse title and description - title ends at first period or colon after <strong>
-                  const strongMatch = cleanTip.match(/<strong>(.*?)<\/strong>/);
-                  let title = '';
-                  let description = '';
-                  
-                  if (strongMatch) {
-                    title = strongMatch[1].trim();
-                    // Get everything after the </strong> tag
-                    description = cleanTip.split('</strong>')[1].trim();
-                    // Remove leading colon, dash, or period
-                    description = description.replace(/^[:\-\.]\s*/, '');
-                  } else {
-                    // If no strong tag, try to find a title pattern (capital letter followed by text)
-                    const titleMatch = cleanTip.match(/^([A-Z][^\.!?]*?)[\.\:]\s*(.+)/s);
-                    if (titleMatch) {
-                      title = titleMatch[1].trim();
-                      description = titleMatch[2].trim();
+              <div className="space-y-3 sm:space-y-4">
+                {aiTips
+                  .split("<br/>")
+                  .filter((tip) => tip.trim())
+                  .map((tip, index) => {
+                    // Remove leading asterisk and bullet points
+                    let cleanTip = tip
+                      .replace(/^\*\s*/, "")
+                      .replace(/^-\s*/, "")
+                      .trim();
+                    if (!cleanTip) return null;
+
+                    // Parse title and description - title ends at first period or colon after <strong>
+                    const strongMatch = cleanTip.match(
+                      /<strong>(.*?)<\/strong>/
+                    );
+                    let title = "";
+                    let description = "";
+
+                    if (strongMatch) {
+                      title = strongMatch[1].trim();
+                      // Get everything after the </strong> tag
+                      description = cleanTip.split("</strong>")[1].trim();
+                      // Remove leading colon, dash, or period
+                      description = description.replace(/^[:\-\.]\s*/, "");
                     } else {
-                      title = `Tip ${index + 1}`;
-                      description = cleanTip;
+                      // If no strong tag, try to find a title pattern (capital letter followed by text)
+                      const titleMatch = cleanTip.match(
+                        /^([A-Z][^\.!?]*?)[\.\:]\s*(.+)/s
+                      );
+                      if (titleMatch) {
+                        title = titleMatch[1].trim();
+                        description = titleMatch[2].trim();
+                      } else {
+                        title = `Tip ${index + 1}`;
+                        description = cleanTip;
+                      }
                     }
-                  }
-                  
-                  // Remove any remaining HTML tags
-                  description = description.replace(/<[^>]*>/g, '').trim();
-                  
-                  return (
-                    <div key={index} className="group">
-                      <div className="flex gap-4 p-5 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-800 dark:to-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-green-400 dark:hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300">
-                        {/* Simple Number Badge - No yellow dot */}
-                        <div className="flex-shrink-0">
-                          <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center text-white font-bold text-base shadow-sm">
-                            {index + 1}
+
+                    // Remove any remaining HTML tags
+                    description = description.replace(/<[^>]*>/g, "").trim();
+
+                    return (
+                      <div key={index} className="group">
+                        <div className="flex gap-3 sm:gap-4 p-3 sm:p-5 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-800 dark:to-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-green-400 dark:hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300">
+                          {/* Simple Number Badge - No yellow dot */}
+                          <div className="flex-shrink-0">
+                            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center text-white font-bold text-sm sm:text-base shadow-sm">
+                              {index + 1}
+                            </div>
+                          </div>
+
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-sm sm:text-base font-bold text-green-700 dark:text-green-400 mb-1.5 sm:mb-2">
+                              {title}
+                            </h3>
+                            <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                              {description}
+                            </p>
                           </div>
                         </div>
-                        
-                        {/* Content */}
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-base font-bold text-green-700 dark:text-green-400 mb-2">
-                            {title}
-                          </h3>
-                          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {description}
-                          </p>
-                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-8">
@@ -450,7 +473,9 @@ const FarmerDashboard: React.FC = () => {
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">{t("generatingTips")}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                  {t("generatingTips")}
+                </p>
                 <div className="mt-4 w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                   <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse"></div>
                 </div>
