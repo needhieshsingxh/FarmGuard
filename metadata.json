@@ -1,0 +1,8 @@
+{
+  "name": "Copy of FarmGuard - AI Biosecurity Portal",
+  "description": "An AI-powered digital platform for pig and poultry biosecurity. Features include ML camera monitoring, AI symptom checker, predictive outbreak alerts, and biosecurity checklists to enhance farm productivity and animal health.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
