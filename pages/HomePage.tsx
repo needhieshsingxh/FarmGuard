@@ -197,21 +197,75 @@ const SolutionsSection = () => {
     return (
         <section id="solutions" className="py-20 bg-white dark:bg-gray-800">
              <div className="container mx-auto px-6">
-                <h2 className="text-4xl font-bold text-center text-gray-800 dark:text-gray-100">{t('solutionsTitle')}</h2>
+                <h2 className="text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-4">{t('solutionsTitle')}</h2>
+                <p className="text-center text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
+                    Empowering stakeholders with AI-driven insights for healthier livestock and safer food products.
+                </p>
                 <div className="mt-12 space-y-12">
-                   <div className="flex flex-col md:flex-row items-center gap-8">
+                   {/* Farmer Solution */}
+                   <div className="flex flex-col md:flex-row items-center gap-8 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800 p-8 rounded-2xl">
                        <div className="md:w-1/2">
-                           <h3 className="text-2xl font-bold text-green-600 dark:text-green-400">{t('solutionFarmerTitle')}</h3>
-                           <p className="mt-4 text-gray-600 dark:text-gray-300">{t('solutionFarmerDesc')}</p>
+                           <div className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-sm font-semibold rounded-full mb-4">
+                               For Farmers
+                           </div>
+                           <h3 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-4">{t('solutionFarmerTitle')}</h3>
+                           <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t('solutionFarmerDesc')}</p>
+                           <div className="mt-6 flex flex-wrap gap-2">
+                               <span className="px-3 py-1 bg-white dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                   AI Monitoring
+                               </span>
+                               <span className="px-3 py-1 bg-white dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                   Biosecurity Checklists
+                               </span>
+                               <span className="px-3 py-1 bg-white dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                   Community Support
+                               </span>
+                           </div>
                        </div>
-                       <div className="md:w-1/2"><img src="https://images.unsplash.com/photo-1582721269490-a472c611516e?q=80&w=1287" className="rounded-lg shadow-lg"/></div>
+                       <div className="md:w-1/2">
+                           <div className="relative group overflow-hidden rounded-2xl">
+                               <img 
+                                   src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1200&auto=format&fit=crop" 
+                                   alt="Farmer using technology on farm" 
+                                   className="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                   loading="lazy"
+                               />
+                               <div className="absolute inset-0 bg-gradient-to-t from-green-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                           </div>
+                       </div>
                    </div>
-                   <div className="flex flex-col md:flex-row-reverse items-center gap-8">
+
+                   {/* Government Solution */}
+                   <div className="flex flex-col md:flex-row-reverse items-center gap-8 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 p-8 rounded-2xl">
                        <div className="md:w-1/2">
-                           <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400">{t('solutionGovtTitle')}</h3>
-                           <p className="mt-4 text-gray-600 dark:text-gray-300">{t('solutionGovtDesc')}</p>
+                           <div className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm font-semibold rounded-full mb-4">
+                               For Government
+                           </div>
+                           <h3 className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-4">{t('solutionGovtTitle')}</h3>
+                           <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t('solutionGovtDesc')}</p>
+                           <div className="mt-6 flex flex-wrap gap-2">
+                               <span className="px-3 py-1 bg-white dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                   Regional Analytics
+                               </span>
+                               <span className="px-3 py-1 bg-white dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                   Compliance Tracking
+                               </span>
+                               <span className="px-3 py-1 bg-white dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                   Policy Insights
+                               </span>
+                           </div>
                        </div>
-                       <div className="md:w-1/2"><img src="https://images.unsplash.com/photo-1518472543444-10c7f4f65682?q=80&w=1287" className="rounded-lg shadow-lg"/></div>
+                       <div className="md:w-1/2">
+                           <div className="relative group overflow-hidden rounded-2xl">
+                               <img 
+                                   src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop" 
+                                   alt="Government data analysis and monitoring" 
+                                   className="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                   loading="lazy"
+                               />
+                               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                           </div>
+                       </div>
                    </div>
                 </div>
             </div>

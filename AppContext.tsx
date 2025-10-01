@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode, useReducer } from 'react';
 import { Alert, UserProfile, CommunityPost, Role, Comment } from './types';
 import { DUMMY_ALERTS, DUMMY_COMMUNITY_POSTS } from './constants';
+import ConfirmDialog from './components/ui/ConfirmDialog';
 
 // --- TYPE DEFINITIONS ---
 type Theme = 'light' | 'dark';
@@ -453,6 +454,21 @@ const translations: Translations = {
 
 // --- APP PROVIDER ---
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // Confirmation Dialog State
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+    type?: 'danger' | 'warning' | 'info';
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => {},
+    type: 'danger',
+  });
+
   // Theme logic
   const [theme, setTheme] = useState<Theme>(() => {
     try {
@@ -556,15 +572,29 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, [posts]);
 
   const deletePost = (postId: string) => {
-    if (window.confirm(t('deletePostConfirm'))) {
+    setConfirmDialog({
+      isOpen: true,
+      title: t('delete'),
+      message: t('deletePostConfirm'),
+      type: 'danger',
+      onConfirm: () => {
         dispatch({ type: 'DELETE_POST', payload: { postId } });
-    }
+        setConfirmDialog(prev => ({ ...prev, isOpen: false }));
+      },
+    });
   };
 
   const deleteComment = (postId: string, commentId: string) => {
-      if (window.confirm(t('deleteCommentConfirm'))) {
+      setConfirmDialog({
+        isOpen: true,
+        title: t('delete'),
+        message: t('deleteCommentConfirm'),
+        type: 'danger',
+        onConfirm: () => {
           dispatch({ type: 'DELETE_COMMENT', payload: { postId, commentId } });
-      }
+          setConfirmDialog(prev => ({ ...prev, isOpen: false }));
+        },
+      });
   };
 
   const addNewPost = (title: string, content: string) => {
@@ -610,6 +640,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         <UserContext.Provider value={userValue}>
           <NotificationContext.Provider value={notificationValue}>
             {children}
+            <ConfirmDialog
+              isOpen={confirmDialog.isOpen}
+              title={confirmDialog.title}
+              message={confirmDialog.message}
+              confirmText={t('delete')}
+              cancelText={t('cancel')}
+              type={confirmDialog.type}
+              onConfirm={confirmDialog.onConfirm}
+              onCancel={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+            />
           </NotificationContext.Provider>
         </UserContext.Provider>
       </LanguageContext.Provider>
